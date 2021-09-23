@@ -60,20 +60,6 @@ def mainTkinterWindow():
     
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     myMainWindow.resizable(False,False)
     myMainWindow.mainloop()
 
