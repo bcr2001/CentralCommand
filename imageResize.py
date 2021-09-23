@@ -8,4 +8,4 @@ def Image_resize(image,w,h):
     resizeFileImage.save(f"C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\{image}Resized.png")
 
 
-Image_resize("access-denied", 70, 70)
+Image_resize("checkme", 70, 70)
