@@ -1,11 +1,47 @@
 from tkinter import *
 import time
+from tkinter import messagebox
 
 # This fucntion is executed if the username and password are correct
+
+def popuperrorHandler():
+    # messagebox.askretrycancel(title="Error",message="entry boxes cannot be left empty!!!")
+    messagebox.showerror(
+        title="Entry box error", message="entry box cannot be left empty!!!")
+
+def wrongUserName_Password():
+    messagebox.showinfo(title="Authentication Error",message="your username or password is wrong")
+    
+
+
+
+def time_function():
+    time_string = time.strftime("%I:%M:%S %p")
+    time_label.config(text=time_string)
+
+    date_string = time.strftime("%A")
+    date_label.config(text=date_string)
+
+
+    myCommandWindow.after(1000,time_function)
+    
+
+
 def commandWindow():
     global authentication_image
-   
+
+
+    global myCommandWindow
     myCommandWindow = Toplevel()
+
+    global time_label
+    time_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
+    time_label.place(x=0,y=0)
+
+    global date_label
+    date_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
+    date_label.place(x=550,y=0)
+
     
     myCommandWindow.title("Central Command")
     myCommandWindow.geometry("650x450")
@@ -15,42 +51,14 @@ def commandWindow():
 
     authentication_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\checkmeResized.png")
     authentication_label = Label(myCommandWindow,text="Welcome To the Authentication Window",font=("Dubai",20),image=authentication_image,compound=LEFT,fg="white",bg="black")
-    authentication_label.pack()
+    authentication_label.place(x=35,y=50)
+
+    time_function()
 
 
 
     myCommandWindow.resizable(False,False)
     myCommandWindow.mainloop()
-
-   
-    
-
-
-def rejection():
-    global sorry_image
-    global wUsername_Image
-    rejectionWindow = Toplevel()
-
-    rejectionWindow.title("Invalid Credentials")
-    rejectionWindow.iconphoto(False, PhotoImage(
-        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\stop.png"))
-    rejectionWindow.config(bg="white")
-    rejectionWindow.geometry("350x350")
-
-    sorry_image = PhotoImage(
-        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\sorryResized.png")
-
-    sorryImage_label = Label(rejectionWindow, image=sorry_image, bg="white")
-    sorryImage_label.pack()
-
-    wUsername_Image = PhotoImage(
-        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\access-deniedResized.png")
-
-    wUsername_label = Label(rejectionWindow, text="Access Denied", image=wUsername_Image,
-                            compound=RIGHT, bg="white", font=("Dubai", 20, "bold"))
-
-    wUsername_label.pack(side=BOTTOM)
-
 
 def logInHandler():
 
@@ -65,8 +73,14 @@ def logInHandler():
     realUserName = infoList[0]
     realpassword = infoList[1]
 
-    if (entered_username != realUserName and entered_password != realpassword):
-        rejection()
+    empty = ""
+
+    if (entered_username.lstrip()== empty) or (entered_password == empty):
+        popuperrorHandler()
+
+    elif (entered_username != realUserName and entered_password != realpassword):
+        # rejection()
+        wrongUserName_Password()
     else:
         commandWindow()
 
