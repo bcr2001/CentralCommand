@@ -78,10 +78,10 @@ def logInHandler():
     if (entered_username.lstrip()== empty) or (entered_password == empty):
         popuperrorHandler()
 
-    elif (entered_username != realUserName and entered_password != realpassword):
+    elif (entered_username != realUserName or entered_password != realpassword):
         # rejection()
         wrongUserName_Password()
-    else:
+    elif (entered_username == realUserName and entered_password == realpassword):
         commandWindow()
 
 
