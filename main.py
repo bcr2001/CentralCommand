@@ -63,7 +63,7 @@ def commandWindow():
     myCommandWindow.mainloop()
 
 x = 0 
-def logInHandler():
+def logInHandler(event):
         global x
         x+=1
      
@@ -153,6 +153,9 @@ def mainTkinterWindow():
     logIn_Button = Button(myMainWindow, text="log in", font=("Tahoma"), bg="black", fg="white", image=logIn_image, compound=RIGHT,
                           borderwidth=0, activebackground="black", activeforeground="white", cursor="hand2", command=logInHandler)
     logIn_Button.place(x=350, y=350)
+
+
+    myMainWindow.bind("<Return>",logInHandler)
 
     myMainWindow.resizable(False, False)
     myMainWindow.mainloop()
