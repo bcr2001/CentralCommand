@@ -2,6 +2,8 @@ from tkinter import *
 import time
 from tkinter import messagebox
 
+
+
 # This fucntion is executed if the username and password are correct
 
 def popuperrorHandler():
@@ -60,34 +62,43 @@ def commandWindow():
     myCommandWindow.resizable(False,False)
     myCommandWindow.mainloop()
 
+x = 0 
 def logInHandler():
+        global x
+        x+=1
+     
+        # getting entry field data
+        entered_username = userName_entry.get()
+        entered_password = password_entry.get()
 
-    # getting entry field data
-    entered_username = userName_entry.get()
-    entered_password = password_entry.get()
+        infoFileOpener = open(
+            "C:\\Users\\Hx101X\\Desktop\\informationFile\\user1.txt", "r")
+        readInfo = infoFileOpener.read()
+        infoList = readInfo.split(",")
+        realUserName = infoList[0]
+        realpassword = infoList[1]
 
-    infoFileOpener = open(
-        "C:\\Users\\Hx101X\\Desktop\\informationFile\\user1.txt", "r")
-    readInfo = infoFileOpener.read()
-    infoList = readInfo.split(",")
-    realUserName = infoList[0]
-    realpassword = infoList[1]
+        empty = ""
 
-    empty = ""
-
-    if (entered_username.lstrip()== empty) or (entered_password == empty):
-        popuperrorHandler()
-
-    elif (entered_username != realUserName or entered_password != realpassword):
-        # rejection()
-        wrongUserName_Password()
-    elif (entered_username == realUserName and entered_password == realpassword):
-        commandWindow()
-
+        if (entered_username.lstrip()== empty) or (entered_password == empty):
+            popuperrorHandler()
+           
+        elif (entered_username != realUserName or entered_password != realpassword):
+            # rejection()
+            wrongUserName_Password()
+            
+        elif (entered_username == realUserName and entered_password == realpassword):
+            commandWindow()
+        
+        if x==3:
+            myMainWindow.destroy()
+      
+     
 
 
 def mainTkinterWindow():
     global myMainWindow
+   
 
     myMainWindow = Tk()
     myMainWindow.title("INFO")
