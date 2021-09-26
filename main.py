@@ -92,7 +92,7 @@ def mainTkinterWindow():
     myMainWindow = Tk()
     myMainWindow.title("INFO")
     myMainWindow.iconphoto(False, PhotoImage(
-        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
+        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\lockResized.png"))
     myMainWindow.config(bg="Black")
     myMainWindow.geometry("650x450")
 
