@@ -42,7 +42,7 @@ def commandWindow():
 
     global date_label
     date_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
-    date_label.place(x=550,y=0)
+    date_label.place(x=530,y=0)
 
     
     myCommandWindow.title("Central Command")
@@ -63,10 +63,40 @@ def commandWindow():
     myCommandWindow.mainloop()
 
 x = 0 
-def logInHandler(event):
+def logInHandler1(event):
         global x
         x+=1
-     
+
+        # getting entry field data
+        entered_username = userName_entry.get()
+        entered_password = password_entry.get()
+
+        infoFileOpener = open(
+            "C:\\Users\\Hx101X\\Desktop\\informationFile\\user1.txt", "r")
+        readInfo = infoFileOpener.read()
+        infoList = readInfo.split(",")
+        realUserName = infoList[0]
+        realpassword = infoList[1]
+
+        empty = ""
+
+        if (entered_username.lstrip()== empty) or (entered_password == empty):
+            popuperrorHandler()
+           
+        elif (entered_username != realUserName or entered_password != realpassword):
+            # rejection()
+            wrongUserName_Password()
+            
+        elif (entered_username == realUserName and entered_password == realpassword):
+            commandWindow()
+        
+        if x==3:
+            myMainWindow.destroy()
+      
+def logInHandler():
+        global x
+        x+=1
+
         # getting entry field data
         entered_username = userName_entry.get()
         entered_password = password_entry.get()
@@ -155,7 +185,7 @@ def mainTkinterWindow():
     logIn_Button.place(x=350, y=350)
 
 
-    myMainWindow.bind("<Return>",logInHandler)
+    myMainWindow.bind("<Return>",logInHandler1)
 
     myMainWindow.resizable(False, False)
     myMainWindow.mainloop()
