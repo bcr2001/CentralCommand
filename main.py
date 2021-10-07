@@ -1,7 +1,7 @@
 from tkinter import *
 import time
 from tkinter import messagebox
-
+import database as mydb
 
 
 # This fucntion is executed if the username and password are correct
@@ -71,23 +71,20 @@ def logInHandler1(event):
         entered_username = userName_entry.get()
         entered_password = password_entry.get()
 
-        infoFileOpener = open(
-            "C:\\Users\\Hx101X\\Desktop\\informationFile\\user1.txt", "r")
-        readInfo = infoFileOpener.read()
-        infoList = readInfo.split(",")
-        realUserName = infoList[0]
-        realpassword = infoList[1]
+        # database authentication
+        results_from_database = mydb.database_authentication(entered_username,entered_password)
+
 
         empty = ""
 
         if (entered_username.lstrip()== empty) or (entered_password == empty):
             popuperrorHandler()
            
-        elif (entered_username != realUserName or entered_password != realpassword):
+        elif results_from_database == False:
             # rejection()
             wrongUserName_Password()
             
-        elif (entered_username == realUserName and entered_password == realpassword):
+        elif results_from_database == True:
             commandWindow()
         
         if x==3:
@@ -101,28 +98,24 @@ def logInHandler():
         entered_username = userName_entry.get()
         entered_password = password_entry.get()
 
-        infoFileOpener = open(
-            "C:\\Users\\Hx101X\\Desktop\\informationFile\\user1.txt", "r")
-        readInfo = infoFileOpener.read()
-        infoList = readInfo.split(",")
-        realUserName = infoList[0]
-        realpassword = infoList[1]
+        # database authentication
+        results_from_database = mydb.database_authentication(entered_username,entered_password)
+
 
         empty = ""
 
         if (entered_username.lstrip()== empty) or (entered_password == empty):
             popuperrorHandler()
            
-        elif (entered_username != realUserName or entered_password != realpassword):
+        elif results_from_database == False:
             # rejection()
             wrongUserName_Password()
             
-        elif (entered_username == realUserName and entered_password == realpassword):
+        elif results_from_database == True:
             commandWindow()
         
         if x==3:
             myMainWindow.destroy()
-      
      
 
 
