@@ -3,7 +3,20 @@ import time
 from tkinter import messagebox
 import database as mydb
 from functions import *
+from createAccount import *
 
+
+
+
+def create_account_handler():
+    new_create_window = Toplevel()
+    create_window = CreateAccountWindowCreator(new_create_window)
+    new_create_window.geometry("650x450")
+    new_create_window.title("Create User")
+    new_create_window.iconphoto(False,PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\createResized.png"))
+    # create_window.submission_function_handler()
+    new_create_window.resizable(False,False)
+    new_create_window.mainloop()
 
 
 
@@ -174,7 +187,7 @@ def mainTkinterWindow():
     # Create Account Button and it's image
     getting_image = PhotoImage(file="C:\\Users\\Hx101X\Desktop\\passwordManager\\Images\\createResized.png")
     create_Account_button = Button(
-        myMainWindow, text="Create Account", font=("Tahoma"),image=getting_image,compound=RIGHT,bg="black",fg="white",activebackground="black",borderwidth=0,cursor="hand2",activeforeground="white")
+        myMainWindow, text="Create Account", font=("Tahoma"),image=getting_image,compound=RIGHT,bg="black",fg="white",activebackground="black",borderwidth=0,cursor="hand2",activeforeground="white",command=create_account_handler)
     create_Account_button.place(x=0,y=370)
 
 
