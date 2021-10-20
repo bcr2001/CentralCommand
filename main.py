@@ -1,19 +1,21 @@
 from tkinter import *
 import time
-from tkinter import messagebox
 import database as mydb
+from functions import *
+from createAccount import *
 
 
-# This fucntion is executed if the username and password are correct
 
-def popuperrorHandler():
-    # messagebox.askretrycancel(title="Error",message="entry boxes cannot be left empty!!!")
-    messagebox.showerror(
-        title="Entry box error", message="entry box cannot be left empty!!!")
-
-def wrongUserName_Password():
-    messagebox.showinfo(title="Authentication Error",message="your username or password is wrong")
-    
+#this fucntion handles the creatin of a new user by using the CreateAccountWindowCreator class contructor found in the createAccount.py file.
+def create_account_handler():
+    new_create_window = Toplevel()
+    create_window = CreateAccountWindowCreator(new_create_window)
+    new_create_window.geometry("650x450")
+    new_create_window.title("Create User")
+    new_create_window.iconphoto(False,PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\createResized.png"))
+    # create_window.submission_function_handler()
+    new_create_window.resizable(False,False)
+    new_create_window.mainloop()
 
 
 
@@ -21,11 +23,11 @@ def time_function():
     time_string = time.strftime("%I:%M:%S %p")
     time_label.config(text=time_string)
 
-    date_string = time.strftime("%A")
-    date_label.config(text=date_string)
+    # date_string = time.strftime("%A")
+    # date_label.config(text=date_string)
 
 
-    myCommandWindow.after(1000,time_function)
+    myMainWindow.after(1000,time_function)
     
 
 
@@ -36,13 +38,11 @@ def commandWindow():
     global myCommandWindow
     myCommandWindow = Toplevel()
 
-    global time_label
-    time_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
-    time_label.place(x=0,y=0)
+    
 
-    global date_label
-    date_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
-    date_label.place(x=530,y=0)
+    # global date_label
+    # date_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
+    # date_label.place(x=530,y=0)
 
     
     myCommandWindow.title("Central Command")
@@ -51,11 +51,10 @@ def commandWindow():
     myCommandWindow.iconphoto(False, PhotoImage(
         file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
 
-    authentication_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\checkmeResized.png")
-    authentication_label = Label(myCommandWindow,text="Welcome To the Authentication Window",font=("Dubai",20),image=authentication_image,compound=LEFT,fg="white",bg="black")
-    authentication_label.place(x=35,y=50)
-
-    time_function()
+    # setting button, image, and placement
+    setting_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\adminResized.png")
+    setting_button = Button(myCommandWindow,image=setting_image,activebackground="black",activeforeground="white",bg="black",borderwidth=0,cursor="hand2")
+    setting_button.place(x=590,y=0)
 
 
 
@@ -87,8 +86,6 @@ def logInHandler1(event):
         elif results_from_database == True:
             commandWindow()
         
-        if x==3:
-            myMainWindow.destroy()
       
 def logInHandler():
         global x
@@ -114,14 +111,13 @@ def logInHandler():
         elif results_from_database == True:
             commandWindow()
         
-        if x==3:
-            myMainWindow.destroy()
+
      
 
 
 def mainTkinterWindow():
     global myMainWindow
-   
+  
 
     myMainWindow = Tk()
     myMainWindow.title("INFO")
@@ -129,6 +125,13 @@ def mainTkinterWindow():
         file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\lockResized.png"))
     myMainWindow.config(bg="Black")
     myMainWindow.geometry("650x450")
+
+    # this is the time label, it's placement and the functions that does everything 
+    global time_label
+    time_label = Label(myMainWindow, bg="black", fg="green",
+                       font=("Arial", 15, "bold"))
+    time_label.place(x=0, y=0)
+    time_function()
 
     # Image positioning
     welcomeImage = PhotoImage(
@@ -142,8 +145,8 @@ def mainTkinterWindow():
     userName_frame.place(x=0, y=150)
     secretImage = PhotoImage(file=(
         "C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\secretResized.png"))  # Image object
-    userName_label = Label(userName_frame, text="Secret Username", font=(
-        "Century Schoolbook", 18, "bold"), image=secretImage, compound=RIGHT, bg="black", fg="white")
+    userName_label = Label(userName_frame, text="Username", font=(
+        "Century Schoolbook", 18, "bold"),  bg="black", fg="white")
     userName_label.pack(padx=20, side=LEFT)  # label and it's image
     global userName_entry
     userName_entry = Entry(userName_frame, font=("Century Schoolbook", 18))
@@ -175,7 +178,13 @@ def mainTkinterWindow():
 
     logIn_Button = Button(myMainWindow, text="log in", font=("Tahoma"), bg="black", fg="white", image=logIn_image, compound=RIGHT,
                           borderwidth=0, activebackground="black", activeforeground="white", cursor="hand2", command=logInHandler)
-    logIn_Button.place(x=350, y=350)
+    logIn_Button.place(x=450, y=350)
+
+    # Create Account Button and it's image
+    getting_image = PhotoImage(file="C:\\Users\\Hx101X\Desktop\\passwordManager\\Images\\createResized.png")
+    create_Account_button = Button(
+        myMainWindow, text="Create Account", font=("Tahoma"),image=getting_image,compound=RIGHT,bg="black",fg="white",activebackground="black",borderwidth=0,cursor="hand2",activeforeground="white",command=create_account_handler)
+    create_Account_button.place(x=0,y=370)
 
 
     myMainWindow.bind("<Return>",logInHandler1)
