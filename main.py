@@ -1,13 +1,12 @@
 from tkinter import *
 import time
-from tkinter import messagebox
 import database as mydb
 from functions import *
 from createAccount import *
 
 
 
-
+#this fucntion handles the creatin of a new user by using the CreateAccountWindowCreator class contructor found in the createAccount.py file.
 def create_account_handler():
     new_create_window = Toplevel()
     create_window = CreateAccountWindowCreator(new_create_window)
@@ -87,8 +86,6 @@ def logInHandler1(event):
         elif results_from_database == True:
             commandWindow()
         
-        if x==3:
-            myMainWindow.destroy()
       
 def logInHandler():
         global x
@@ -114,8 +111,7 @@ def logInHandler():
         elif results_from_database == True:
             commandWindow()
         
-        if x==3:
-            myMainWindow.destroy()
+
      
 
 
