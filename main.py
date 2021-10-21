@@ -33,11 +33,10 @@ def time_function():
 
 def commandWindow():
     global authentication_image
-
+    myMainWindow.withdraw()
 
     global myCommandWindow
     myCommandWindow = Toplevel()
-
     
 
     # global date_label
@@ -84,7 +83,9 @@ def logInHandler1(event):
             wrongUserName_Password()
             
         elif results_from_database == True:
+            
             commandWindow()
+            
         
       
 def logInHandler():
