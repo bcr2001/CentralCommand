@@ -215,13 +215,13 @@ class CreateAccountWindowCreator:
     def submission_function_handler(self):
         from functions import phoneNo_valid_checker
         #using the .get function, the data provided by the user is assigned to a variable
-        username_get = self.username_entry.get()
-        password_get = self.password_entry.get()
-        firstname_get = self.firstName_entry.get()
-        middle_get = self.middle_entry.get()
-        last_get = self.lastName_entry.get()
-        phone_get = self.phone_entry.get()
-        email_get = self.email_entry.get()
+        username_get = self.username_entry.get().rstrip()
+        password_get = self.password_entry.get().rstrip()
+        firstname_get = self.firstName_entry.get().rstrip()
+        middle_get = self.middle_entry.get().rstrip()
+        last_get = self.lastName_entry.get().rstrip()
+        phone_get = self.phone_entry.get().rstrip()
+        email_get = self.email_entry.get().rstrip()
 
 
         empty = "" #empty string 

@@ -3,6 +3,7 @@ import time
 import database as mydb
 from functions import *
 from createAccount import *
+from commandWindow import * 
 
 
 
@@ -35,25 +36,21 @@ def commandWindow():
     global authentication_image
     myMainWindow.withdraw()
 
+    actual_username = userName_entry.get()
+ 
     global myCommandWindow
     myCommandWindow = Toplevel()
-    
-
-    # global date_label
-    # date_label = Label(myCommandWindow,bg="black",fg="green",font=("Arial",15,"bold"))
-    # date_label.place(x=530,y=0)
-
-    
-    myCommandWindow.title("Central Command")
+    CommandWindow(myCommandWindow,actual_username)
+    commandWindow = myCommandWindow.title("Central Command")
     myCommandWindow.geometry("650x450")
     myCommandWindow.config(bg="black")
     myCommandWindow.iconphoto(False, PhotoImage(
         file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
 
     # setting button, image, and placement
-    setting_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\adminResized.png")
-    setting_button = Button(myCommandWindow,image=setting_image,activebackground="black",activeforeground="white",bg="black",borderwidth=0,cursor="hand2")
-    setting_button.place(x=590,y=0)
+    # setting_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\adminResized.png")
+    # setting_button = Button(myCommandWindow,image=setting_image,activebackground="black",activeforeground="white",bg="black",borderwidth=0,cursor="hand2")
+    # setting_button.place(x=590,y=0)
 
 
 
