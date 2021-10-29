@@ -8,4 +8,4 @@ def Image_resize(image,w,h):
     resizeFileImage.save(f"C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\{image}Resized.png")
 
 
-Image_resize("admin", 50, 50)
+Image_resize("play2", 50, 50)

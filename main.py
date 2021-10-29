@@ -11,7 +11,16 @@ from commandWindow import *
 def create_account_handler():
     new_create_window = Toplevel()
     create_window = CreateAccountWindowCreator(new_create_window)
-    new_create_window.geometry("650x450")
+    w = 650
+    h = 450
+
+    width_screen = myMainWindow.winfo_screenwidth()
+    heigh_screen = myMainWindow.winfo_screenheight()
+
+    x = (width_screen/2) - (w/2)
+    y = (heigh_screen/2) - (h/2)
+
+    myMainWindow.geometry("%dx%d+%d+%d" % (w, h, x, y))
     new_create_window.title("Create User")
     new_create_window.iconphoto(False,PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\createResized.png"))
     # create_window.submission_function_handler()
@@ -115,14 +124,27 @@ def logInHandler():
 
 def mainTkinterWindow():
     global myMainWindow
-  
+
 
     myMainWindow = Tk()
     myMainWindow.title("INFO")
     myMainWindow.iconphoto(False, PhotoImage(
         file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\lockResized.png"))
     myMainWindow.config(bg="Black")
-    myMainWindow.geometry("650x450")
+    
+    w = 650
+    h = 450
+    
+    width_screen = myMainWindow.winfo_screenwidth()
+    heigh_screen = myMainWindow.winfo_screenheight()
+    
+    x = (width_screen/2) - (w/2)
+    y = (heigh_screen/2) - (h/2)
+
+    myMainWindow.geometry("%dx%d+%d+%d" % (w,h,x,y))
+
+
+
 
     # this is the time label, it's placement and the functions that does everything 
     global time_label
@@ -186,6 +208,8 @@ def mainTkinterWindow():
 
 
     myMainWindow.bind("<Return>",logInHandler1)
+
+
 
     myMainWindow.resizable(False, False)
     myMainWindow.mainloop()
