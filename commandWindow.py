@@ -12,6 +12,11 @@ class CommandWindow:
 
     def __init__(self, master, username):
         self.master = master
+
+        self.master.iconphoto(False, PhotoImage(
+            file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
+
+
         # giving the master geometry and screen position to oen
         w = 650
         h = 450
@@ -78,21 +83,12 @@ class CommandWindow:
             "Arial", 15), height=3, width=35, padx=5, highlightthickness=0.5, highlightcolor="orange")
         self.mytext_area.grid(row=0, column=1)
 
-        #error disply label
-        self.error_value = StringVar()
-        self.error_label = Label(self.my_frame_2,
-                                 textvariable=self.error_value, fg="red", bg="black",
-                                 font=("Arial", 10, "bold"))
-        self.error_label.grid(row=3, column=0)
-
-        #personal information label
-        self.personal_value = StringVar()
-        self.personal_label = Label(self.my_frame_2,
-                                    textvariable=self.personal_value, fg="white", bg="black",
-                                 font=("Arial", 15, "bold"),
-                                 )
-        self.personal_label.grid(row=3, column=0)
-
+        # cental disply label which handles the display of the type of information to present to the user.
+        self.central_value = StringVar()
+        self.central_label = Label(self.my_frame_2,
+                                   textvariable=self.central_value, fg="red", bg="black",
+                                   font=("Arial", 10, "bold"))
+        self.central_label.grid(row=3, column=0)
 
 
         # run button code
@@ -103,54 +99,40 @@ class CommandWindow:
                                  command=self.run_function_handler)
         self.run_button.grid(row=0, column=2, padx=10)
 
-
-
+    #handles the operations that are run when the user clicks the run button
     def run_function_handler(self):
-        list_of_codes = [f"{self.username}.get_info()"]
-        text_code = self.mytext_area.get("1.0", END).strip()
+        list_of_codes = [f"{self.username}.get_info()"] #this is a list of valid code that can be entered into the text area
+
+        text_code = self.mytext_area.get("1.0", END).strip() 
+
         command_error_display = f"Traceback (most recent entry):\nfield Input[0]\n{text_code}\n Command error: {text_code}is not a command\ntype help_ to get recommanded/existing commands".rjust(
             10)
 
         # message displyed if the command is <35 characters in lenght.
         # essentially created because long characters tend por out of the label widget
         length_error_display = f"Traceback (most recent entry): field Input[0] Length error: {text_code[0:3]}...\ndoes not satisfy the length requirements\ntype help_ to get recommanded/existing commands"
+
         if len(text_code) > 30:
-            self.error_value.set(length_error_display)
+            self.central_label.config(font=("Arial", 10, "bold"), fg="red")
+            self.central_value.set(length_error_display)
+
         elif text_code not in list_of_codes:
-            self.error_value.set(command_error_display)
+            self.central_label.config(font=("Arial", 10, "bold"), fg="red")
+            self.central_value.set(command_error_display)
+
         elif text_code == f"{self.username}.get_info()":
-            self.personal_information_diplayer()
 
-    # this function handles the errors that might be present in the code the user enters
+            self.central_label.config(font=("Arial", 15, "bold"), fg="white")
+            data_list = retrive_users_data(self.username)
 
-    # def error_display(self,type_error):
+            peronal_text_format_WM = f"Username: {data_list[0]}\n\nPassword: {data_list[1]}\n\nFull Name: {data_list[2]} {data_list[3]} {data_list[4]}\n\nPhone Number: {data_list[5]}\n\nEmail Address: {data_list[6]}"
 
+            peronal_text_format_WTM = f"Username: {data_list[0]}\nPassword:    {data_list[1]}\nFull Name: {data_list[2]} {data_list[4]}\nPhone Number: {data_list[5]}\nEmail Address: {data_list[6]}"
 
-    #     self.error_value = StringVar()
-    #     self.error_label = Label(self.my_frame_2,
-    #                              textvariable=self.error_value, fg="red", bg="black",
-    #                                     font=("Arial", 10, "bold"))
-    #     self.error_label.grid(row=3, column=0)
-
-
-
-    def personal_information_diplayer(self):
-        data_list = retrive_users_data(self.username)
-
-        peronal_text_format_WM = f"Username: {data_list[0]}\n\nPassword: {data_list[1]}\n\nFull Name: {data_list[2]} {data_list[3]} {data_list[4]}\n\nPhone Number: {data_list[5]}\n\nEmail Address: {data_list[6]}"
-
-        peronal_text_format_WTM = f"Username: {data_list[0]}\nPassword:    {data_list[1]}\nFull Name: {data_list[2]} {data_list[4]}\nPhone Number: {data_list[5]}\nEmail Address: {data_list[6]}"
-
-        if data_list[3] == " ":
-            self.personal_value.set(peronal_text_format_WTM)
-        else:
-            self.personal_value.set(peronal_text_format_WM)
-        
-
-        # self.personal_information_label = Label(self.my_frame_2,f"Hello")
-        # self.personal_information_label.grid(row=3, column=0)
-
-        print(data_list)
+            if data_list[3] == " ":
+                self.central_value.set(peronal_text_format_WTM)
+            else:
+                self.central_value.set(peronal_text_format_WM)
 
 
 def run_me():
@@ -164,4 +146,4 @@ def run_me():
     my_window.mainloop()
 
 
-run_me()
+# run_me()

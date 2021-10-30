@@ -40,7 +40,7 @@ def time_function():
     myMainWindow.after(1000,time_function)
     
 
-
+#responsible for creating and displaying the central command window
 def commandWindow():
     global authentication_image
     myMainWindow.withdraw()
@@ -48,23 +48,13 @@ def commandWindow():
     actual_username = userName_entry.get()
  
     global myCommandWindow
-    myCommandWindow = Toplevel()
-    CommandWindow(myCommandWindow,actual_username)
-    commandWindow = myCommandWindow.title("Central Command")
-    myCommandWindow.geometry("650x450")
-    myCommandWindow.config(bg="black")
-    myCommandWindow.iconphoto(False, PhotoImage(
-        file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
+    my_window = Toplevel()
+    my_window.title("Command Unit")
+    central = CommandWindow(my_window, actual_username)
+    central._create_new_field()
 
-    # setting button, image, and placement
-    # setting_image = PhotoImage(file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\adminResized.png")
-    # setting_button = Button(myCommandWindow,image=setting_image,activebackground="black",activeforeground="white",bg="black",borderwidth=0,cursor="hand2")
-    # setting_button.place(x=590,y=0)
-
-
-
-    myCommandWindow.resizable(False,False)
-    myCommandWindow.mainloop()
+    my_window.resizable(False, False)
+    my_window.mainloop()
 
 x = 0 
 def logInHandler1(event):
