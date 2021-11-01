@@ -101,38 +101,62 @@ class CommandWindow:
 
     #handles the operations that are run when the user clicks the run button
     def run_function_handler(self):
-        list_of_codes = [f"{self.username}.get_info()"] #this is a list of valid code that can be entered into the text area
+        # this is a list of valid code that can be entered into the text area
+        list_of_codes = [f"{self.username}.get_info()",
+                         f"{self.username}.get_info(username)", f"{self.username}.get_info(password)", f"{self.username}.get_info(fullname)", f"{self.username}.get_info(phone)", f"{self.username}.get_info(email)"]
 
-        text_code = self.mytext_area.get("1.0", END).strip() 
+        self.text_code = self.mytext_area.get("1.0", END).strip() 
 
-        command_error_display = f"Traceback (most recent entry):\nfield Input[0]\n{text_code}\n Command error: {text_code}is not a command\ntype help_ to get recommanded/existing commands".rjust(
+        command_error_display = f"Traceback (most recent entry):\nfield Input[0]\n{self.text_code}\n Command error: {self.text_code}is not a command\ntype help_ to get recommanded/existing commands".rjust(
             10)
 
         # message displyed if the command is <35 characters in lenght.
         # essentially created because long characters tend por out of the label widget
-        length_error_display = f"Traceback (most recent entry): field Input[0] Length error: {text_code[0:3]}...\ndoes not satisfy the length requirements\ntype help_ to get recommanded/existing commands"
+        length_error_display = f"Traceback (most recent entry): field Input[0] Length error: {self.text_code[0:3]}...\ndoes not satisfy the length requirements\ntype help_ to get recommanded/existing commands"
 
-        if len(text_code) > 30:
+        if len(self.text_code) > 40:
             self.central_label.config(font=("Arial", 10, "bold"), fg="red")
             self.central_value.set(length_error_display)
 
-        elif text_code not in list_of_codes:
+        elif self.text_code not in list_of_codes:
             self.central_label.config(font=("Arial", 10, "bold"), fg="red")
             self.central_value.set(command_error_display)
 
-        elif text_code == f"{self.username}.get_info()":
+        elif self.text_code == f"{self.username}.get_info()":
+            self.general_code_function()
 
-            self.central_label.config(font=("Arial", 15, "bold"), fg="white")
-            data_list = retrive_users_data(self.username)
+        else:
+            self.specific_parameter()
 
-            peronal_text_format_WM = f"Username: {data_list[0]}\n\nPassword: {data_list[1]}\n\nFull Name: {data_list[2]} {data_list[3]} {data_list[4]}\n\nPhone Number: {data_list[5]}\n\nEmail Address: {data_list[6]}"
+            
+    def general_code_function(self):
+        self.central_label.config(font=("Arial", 15, "bold"), fg="white")
+        data_list = retrive_users_data(self.username)
 
-            peronal_text_format_WTM = f"Username: {data_list[0]}\nPassword:    {data_list[1]}\nFull Name: {data_list[2]} {data_list[4]}\nPhone Number: {data_list[5]}\nEmail Address: {data_list[6]}"
+        peronal_text_format_WM = f"Username: {data_list[0]}\n\nPassword: {data_list[1]}\n\nFull Name: {data_list[2]} {data_list[3]} {data_list[4]}\n\nPhone Number: {data_list[5]}\n\nEmail Address: {data_list[6]}"
 
-            if data_list[3] == " ":
-                self.central_value.set(peronal_text_format_WTM)
-            else:
-                self.central_value.set(peronal_text_format_WM)
+        peronal_text_format_WTM = f"Username: {data_list[0]}\nPassword:    {data_list[1]}\nFull Name: {data_list[2]} {data_list[4]}\nPhone Number: {data_list[5]}\nEmail Address: {data_list[6]}"
+
+        if data_list[3] == " ":
+            self.central_value.set(peronal_text_format_WTM)
+        else:
+            self.central_value.set(peronal_text_format_WM)
+
+
+    def specific_parameter(self):
+        data_list_specific = retrive_users_data(self.username)
+        self.central_label.config(font=("Arial", 15, "bold"), fg="white")
+
+        if self.text_code == f"{self.username}.get_info(username)":
+            self.central_value.set(f"Username: {data_list_specific[0]}")
+        elif self.text_code == f"{self.username}.get_info(password)":
+            self.central_value.set(f"Password: {data_list_specific[1]}")
+        elif self.text_code == f"{self.username}.get_info(fullname)":
+            self.central_value.set(f"Full Name: {data_list_specific[2]} {data_list_specific[3]} {data_list_specific[4]}")
+        elif self.text_code == f"{self.username}.get_info(phone)":
+            self.central_value.set(f"Phone Number: {data_list_specific[5]}")
+        elif self.text_code == f"{self.username}.get_info(email)":
+            self.central_value.set(f"Email: {data_list_specific[6]}")
 
 
 def run_me():
@@ -146,4 +170,4 @@ def run_me():
     my_window.mainloop()
 
 
-# run_me()
+run_me()
