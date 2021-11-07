@@ -14,7 +14,7 @@ class CommandWindow:
         self.master = master
 
         self.master.iconphoto(False, PhotoImage(
-            file="C:\\Users\\Hx101X\\Desktop\\passwordManager\\Images\\password.png"))
+            file="C:\\Users\\Hx101X\\Desktop\\centralcommand\\Images\\password.png"))
 
 
         # giving the master geometry and screen position to oen
