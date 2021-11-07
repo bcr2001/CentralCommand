@@ -2,6 +2,10 @@
 from tkinter import *
 from tkinter import ttk
 from database import retrive_users_data
+from tkinter import messagebox
+import mysql
+from functions import popup
+import time
 
 
 number_of_clicks = 0
@@ -103,7 +107,7 @@ class CommandWindow:
     def run_function_handler(self):
         # this is a list of valid code that can be entered into the text area
         list_of_codes = [f"{self.username}.get_info()",
-                         f"{self.username}.get_info(username)", f"{self.username}.get_info(password)", f"{self.username}.get_info(fullname)", f"{self.username}.get_info(phone)", f"{self.username}.get_info(email)"]
+                         f"{self.username}.get_info(username)", f"{self.username}.get_info(password)", f"{self.username}.get_info(fullname)", f"{self.username}.get_info(phone)", f"{self.username}.get_info(email)", f"{self.username}.command(delete)"]
 
         self.text_code = self.mytext_area.get("1.0", END).strip() 
 
@@ -149,25 +153,61 @@ class CommandWindow:
 
         if self.text_code == f"{self.username}.get_info(username)":
             self.central_value.set(f"Username: {data_list_specific[0]}")
+
         elif self.text_code == f"{self.username}.get_info(password)":
             self.central_value.set(f"Password: {data_list_specific[1]}")
+
         elif self.text_code == f"{self.username}.get_info(fullname)":
             self.central_value.set(f"Full Name: {data_list_specific[2]} {data_list_specific[3]} {data_list_specific[4]}")
+
         elif self.text_code == f"{self.username}.get_info(phone)":
             self.central_value.set(f"Phone Number: {data_list_specific[5]}")
+
         elif self.text_code == f"{self.username}.get_info(email)":
             self.central_value.set(f"Email: {data_list_specific[6]}")
 
+        elif self.text_code == f"{self.username}.command(delete)":
+            self.delete_me_completely()
 
-def run_me():
 
-    my_window = Tk()
-    my_window.title("TestUnit")
-    central = CommandWindow(my_window, "905shooter")
+    def delete_me_completely(self):
+        the_prompt = messagebox.askyesno(title="Account Deletion!!",
+                                         message="You are currently in the process of deleting you account\nARE YOU SURE YOU WANT TO DO SO? (data will not be able to be recovered if account is deleted)")
+        if the_prompt == True:
+            self.database_erase(self.username)
+        else:
+            popup()
 
-    central._create_new_field()
 
-    my_window.mainloop()
+
+
+    def database_erase(self,username):
+        db_access = mysql.connector.connect(host="localhost", user="root",
+                                            password="nj111205", database="passwordmanager")
+        db_pointer = db_access.cursor()
+
+        try:
+            delete_user_code = "delete from personalInformation where username = %s "
+            db_pointer.execute(delete_user_code, [(username)])
+            db_access.commit()
+        except mysql.connector.Error as err:
+            print("Something went wrong :(")
+        
+
+        messagebox.showinfo(message="BYE!!")
+        time.sleep(0.5)
+        self.master.destroy()
+
+
+# def run_me():
+
+#     my_window = Tk()
+#     my_window.title("TestUnit")
+#     central = CommandWindow(my_window, "james")
+
+#     central._create_new_field()
+
+#     my_window.mainloop()
 
 
 # run_me()

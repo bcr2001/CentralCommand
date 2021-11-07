@@ -67,3 +67,16 @@ def retrive_users_data(username):
     
     return users_datalist
     
+
+#this fucntion is repsonsible for deleting the users information.
+def database_erase(username):
+    db_access = mysql.connector.connect(host = "localhost", user = "root",
+                                        password = "nj111205", database = "passwordmanager")
+    db_pointer =db_access.cursor()
+
+    try:
+        delete_user_code = "delete from personalInformation where username = %s "
+        db_pointer.execute(delete_user_code,[(username)])
+        db_access.commit()
+    except mysql.connector.Error as err:
+        print("Something went wrong :(")

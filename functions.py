@@ -45,3 +45,8 @@ def phoneNo_valid_checker(phoneNumber):
         return True 
     else:
         return False
+
+
+def popup():
+    messagebox.showinfo(title=":)",
+                        message="Glad your staying with us :) don't scare us like that again please :(")
