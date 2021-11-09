@@ -107,7 +107,7 @@ class CommandWindow:
     def run_function_handler(self):
         # this is a list of valid code that can be entered into the text area
         list_of_codes = [f"{self.username}.get_info()",
-                         f"{self.username}.get_info(username)", f"{self.username}.get_info(password)", f"{self.username}.get_info(fullname)", f"{self.username}.get_info(phone)", f"{self.username}.get_info(email)", f"{self.username}.command(delete)"]
+                         f"{self.username}.get_info(username)", f"{self.username}.get_info(password)", f"{self.username}.get_info(fullname)", f"{self.username}.get_info(phone)", f"{self.username}.get_info(email)", f"{self.username}.command(delete)",f"{self.username}.help_"]
 
         self.text_code = self.mytext_area.get("1.0", END).strip() 
 
@@ -148,6 +148,10 @@ class CommandWindow:
 
 
     def specific_parameter(self):
+
+        helpCommands = f"-get_info()- dispays all your personal information\n-get_info(password)- displays your password(only)\n-get_info(username)- displays your username(only)\n-get_info(fullname)- displays your fullname(only)\n-get_info(phone)- displays your Phone Number(only)\n-get_info(email)- displays your Email Address(only)\n-command(delete)- deletes/removes complately your account\n        information from the database(warning!!)"
+
+
         data_list_specific = retrive_users_data(self.username)
         self.central_label.config(font=("Arial", 15, "bold"), fg="white")
 
@@ -168,6 +172,10 @@ class CommandWindow:
 
         elif self.text_code == f"{self.username}.command(delete)":
             self.delete_me_completely()
+
+        elif self.text_code == f"{self.username}.help_":
+            self.central_label.config(font=("Arial", 12), fg="green")
+            self.central_value.set(helpCommands)
 
 
     def delete_me_completely(self):
@@ -199,15 +207,15 @@ class CommandWindow:
         self.master.destroy()
 
 
-# def run_me():
+def run_me():
 
-#     my_window = Tk()
-#     my_window.title("TestUnit")
-#     central = CommandWindow(my_window, "james")
+    my_window = Tk()
+    my_window.title("TestUnit")
+    central = CommandWindow(my_window, "905shooter")
 
-#     central._create_new_field()
+    central._create_new_field()
 
-#     my_window.mainloop()
+    my_window.mainloop()
 
 
-# run_me()
+run_me()
